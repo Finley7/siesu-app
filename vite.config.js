@@ -7,6 +7,8 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/create-ticket.js',
+                'resources/css/create-ticket.css'
             ],
             refresh: true,
         }),
