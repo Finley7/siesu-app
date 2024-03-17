@@ -21,7 +21,7 @@
     <div class="py-12 sm:flex justify-center">
 
         <div class="sm:w-1/2 sm:px-4">
-            <a class="text-sm text-gray-500 flex items-center uppercase" href="{{ route('ticket.index') }}">
+            <a class="text-sm text-blue-500 flex items-center uppercase hover:text-blue-700" href="{{ route('ticket.index') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
                 </svg>
@@ -103,7 +103,11 @@
                 </div>
             </div>
                 <div class="px-2 mb-2">
-                    <a class="text-xs text-gray-500" href="">{{ __('ticket.view.manage.hard-delete') }}</a>
+                    <form method="post" action="{{ route('ticket.destroy', ['ticket' => $ticket]) }}">
+                        @csrf
+                        @method('delete')
+                        <button class="text-xs text-gray-500">{{ __('ticket.view.manage.hard-delete') }}</button>
+                    </form>
                 </div>
             @endif
             <div class="bg-white overflow-hidden shadow-sm rounded shadow">

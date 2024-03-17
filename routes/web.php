@@ -15,7 +15,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return redirect()->to('/tickets');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/tickets/view/{ticket}', [TicketController::class, 'show'])->name('ticket.view');
     Route::get('/tickets/create', [TicketController::class, 'create'])->name('ticket.create')->can('create', Ticket::class);
     Route::post('/tickets/create', [TicketController::class, 'store'])->name('ticket.store')->can('create', Ticket::class);
+    Route::delete('/tickets/delete/{ticket}', [TicketController::class, 'destroy'])->name('ticket.destroy');
 
     Route::post('/tickets/{ticket}/manage/save', [ManageTicketController::class, 'save'])->name('ticket.manage.save')->can('manage', Ticket::class);
     Route::get('/tickets/{ticket}/manage/mark-as-done', [ManageTicketController::class, 'done'])->name('ticket.manage.mark-as-done');

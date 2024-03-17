@@ -24,7 +24,7 @@ class CreateTicketRequest extends FormRequest
     {
         return [
             'title' => 'required',
-            'description' => '',
+            'description' => 'required',
             'ticket_category_id' => 'required',
             'temp_ticket_id' => 'required'
         ];

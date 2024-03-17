@@ -89,6 +89,11 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        if(!Auth::user()->can('delete', $ticket)) {
+            abort(403);
+        }
+
+        $ticket->delete();
+        return redirect()->to('/tickets')->with('success', __('ticket.flash.deleted'));
     }
 }
