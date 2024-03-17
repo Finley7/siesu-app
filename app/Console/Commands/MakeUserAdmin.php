@@ -29,13 +29,14 @@ class MakeUserAdmin extends Command
     {
         try {
             $user = User::where('email', $this->argument('email'))->firstOrFail();
-            $user->update(['role' => 'admin']);
+            $user->role = 'admin';
+            $user->save();
         } catch(ModelNotFoundException $exception) {
             $this->error('The user was not found.');
             return;
         }
 
 
-        $this->alert('The user has been given the admin role');
+        $this->comment("{$user->name} ({$user->email}) was made an admin");
     }
 }
