@@ -20,7 +20,7 @@
 
     <div class="py-12 sm:flex justify-center">
 
-        <div class="sm:w-2/5 sm:px-4">
+        <div class="sm:w-2/5 sm:px-4 md:w-1/2">
             <div class="bg-white overflow-hidden shadow-sm rounded shadow">
                 <div class="p-6 text-gray-900">
                     <h2 class="mb-2">{{ __('ticket.create.title') }}</h2>

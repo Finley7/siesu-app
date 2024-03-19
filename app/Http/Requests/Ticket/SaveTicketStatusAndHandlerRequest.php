@@ -24,7 +24,8 @@ class SaveTicketStatusAndHandlerRequest extends FormRequest
     {
         return [
             'status' => 'required',
-            'handler_id' => ''
+            'handler_id' => '',
+            'author_id' => 'required',
         ];
     }
 }

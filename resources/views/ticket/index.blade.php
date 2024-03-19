@@ -36,19 +36,14 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @if($tickets->count() == 0)
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-500 whitespace-nowrap" colspan="7">{{ __('ticket.index.table.empty') }}</td>
+                        </tr>
+                    @endif
                     @foreach($tickets as $ticket)
                         <tr class="border-b hover:bg-gray-50">
-                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                 @if($ticket->status == 'done')
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                              stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-green-500">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                          d="m4.5 12.75 6 6 9-13.5"/>
-                                    </svg>
-                                @else
-                                    {{ $ticket->id }}
-                                @endif
-                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $ticket->id }}</td>
                             <td class="px-6 py-4">{{ $ticket->title }}</td>
                             <td class="px-6 py-4">{{ $ticket->handler->name ?? '-' }}</td>
                             <td class="px-6 py-4"><span
@@ -59,16 +54,14 @@
                             <td class="px-6 py-4">
                                 <div class="flex space-x-1">
                                     @if(Auth::user()->can('manage', Ticket::class))
-                                        @if($ticket->status != 'done')
-                                            <a class="p-1 bg-green-100 text-green-500 rounded hover:bg-green-200 transition-colors"
-                                               href="{{ route('ticket.manage.mark-as-done', ['ticket' => $ticket->id]) }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                          d="m4.5 12.75 6 6 9-13.5"/>
-                                                </svg>
-                                            </a>
-                                        @endif
+                                        <a class="p-1 bg-green-100 text-green-500 rounded hover:bg-green-200 transition-colors"
+                                           href="{{ route('ticket.manage.mark-as-done', ['ticket' => $ticket->id]) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="m4.5 12.75 6 6 9-13.5"/>
+                                            </svg>
+                                        </a>
                                     @endif
                                         <a class="p-1 bg-blue-100 text-blue-500 rounded hover:bg-blue-200 transition-colors"
                                            href="{{ route('ticket.view', ['ticket' => $ticket]) }}">

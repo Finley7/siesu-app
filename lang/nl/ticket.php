@@ -28,7 +28,8 @@ return [
             'form' => [
                 'label' => [
                     'status' => 'Status',
-                    'handler' => 'Uitvoerend medewerker'
+                    'handler' => 'Uitvoerend medewerker',
+                    'author' => 'Auteur'
                 ],
                 'status' => [
                     'option' => [
@@ -42,6 +43,11 @@ return [
                 'handler' => [
                     'option' => [
                         'default' => 'Selecteer medewerker'
+                    ],
+                ],
+                'author' => [
+                    'option' => [
+                        'default' => 'Selecteer auteur'
                     ],
                 ],
                 'save' => 'Opslaan',
@@ -79,13 +85,14 @@ return [
     ],
     'index' => [
         'title' => 'Overzicht van tickets',
-        'create-button' => 'Ticket aanmaken',
+        'create-button' => 'Nieuw ticket',
         'table' => [
             'title' => 'Titel',
             'handler' => 'Behandelaar',
             'status' => 'Status',
             'date' => 'Datum',
-            'last_response' => 'Recente reactie'
+            'last_response' => 'Recente reactie',
+            'empty' => 'Er zijn geen openstaande tickets'
         ],
     ]
 

@@ -18,7 +18,7 @@ class TicketController extends Controller
     public function index()
     {
         return view('ticket/index', [
-            'tickets' => Ticket::orderBy('created_at', 'desc')->get()
+            'tickets' => Ticket::whereNot('status', 'done')->orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -64,7 +64,7 @@ class TicketController extends Controller
     {
         return view('ticket/view', [
             'ticket' => $ticket,
-            'admins' => User::where('role', 'admin')->get()
+            'users' => User::all(),
         ]);
     }
 

@@ -92,8 +92,20 @@
                             <x-input-label for="handler_id" :value="__('ticket.view.manage.form.label.handler')"/>
                             <select name="handler_id" id="handler_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
                                 <option value="">{{ __('ticket.view.manage.form.handler.option.default') }}</option>
-                                @foreach($admins as $admin)
-                                    <option value="{{ $admin->id }}" @if($admin->id == $ticket->handler?->id) selected @endif>{{ $admin->name }}</option>
+                                @foreach($users->filter(function($user) { return $user->role == 'admin'; }) as $admin)
+                                    <option value="{{ $admin->id }}" {{ $admin->id == $ticket->handler?->id ? 'selected' : '' }}>
+                                        {{ $admin->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('handler_id')" class="mt-2"/>
+                        </div>
+                        <div class="mt-4">
+                            <x-input-label for="author_id" :value="__('ticket.view.manage.form.label.author')"/>
+                            <select name="author_id" id="author_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
+                                <option value="">{{ __('ticket.view.manage.form.author.option.default') }}</option>
+                                @foreach($users as $client)
+                                    <option value="{{ $client->id }}" @if($client->id == $ticket->author?->id) selected @endif>{{ $client->name }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('handler_id')" class="mt-2"/>
