@@ -16,4 +16,8 @@ class TicketComment extends Model
     public function author() {
         return $this->belongsTo(User::class);
     }
+
+    public function ticket() {
+        return $this->belongsTo(Ticket::class);
+    }
 }

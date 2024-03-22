@@ -9,7 +9,9 @@
         "glebsky/laravel-lang-generator": "^1.0",
         "laravel/breeze": "^2.0",
         "laravel/framework": "^11.0",
-        "laravel/tinker": "^2.9"
+        "laravel/tinker": "^2.9",
+        "mailjet/laravel-mailjet": "^3.0",
+        "symfony/http-client": "^7.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.12",

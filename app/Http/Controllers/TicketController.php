@@ -7,8 +7,10 @@ use App\Models\Ticket;
 use App\Models\TicketAttachment;
 use App\Models\TicketCategory;
 use App\Models\User;
+use App\Notifications\Ticket\TicketCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class TicketController extends Controller
 {
@@ -53,6 +55,8 @@ class TicketController extends Controller
             $attachment->status = 'complete';
             $attachment->save();
         }
+
+        Notification::send([User::where('role', 'admin')], (new TicketCreated($ticket))->locale('nl'));
 
         return redirect()->to('tickets/view/' . $ticket->id);
     }

@@ -63,6 +63,7 @@ return [
         ],
         'media' => [
             'title' => 'Media',
+            'empty' => 'Er is geen media bij dit ticket geupload.'
         ],
     ],
     'create' => [

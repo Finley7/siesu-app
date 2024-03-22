@@ -80,11 +80,11 @@
                         <div class="mt-4">
                             <x-input-label for="status" :value="__('ticket.view.manage.form.label.status')"/>
                             <select name="status" id="status" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full">
-                                <option value="new">{{ __('ticket.view.manage.form.status.option.new') }}</option>
-                                <option value="in_review">{{ __('ticket.view.manage.form.status.option.in_review') }}</option>
-                                <option value="in_progress">{{ __('ticket.view.manage.form.status.option.in_progress') }}</option>
-                                <option value="to_verify">{{ __('ticket.view.manage.form.status.option.to_verify') }}</option>
-                                <option value="done">{{ __('ticket.view.manage.form.status.option.done') }}</option>
+                                <option @if($ticket->status == 'new') selected @endif value="new">{{ __('ticket.view.manage.form.status.option.new') }}</option>
+                                <option @if($ticket->status == 'in_review') selected @endif value="in_review">{{ __('ticket.view.manage.form.status.option.in_review') }}</option>
+                                <option @if($ticket->status == 'in_progress') selected @endif value="in_progress">{{ __('ticket.view.manage.form.status.option.in_progress') }}</option>
+                                <option @if($ticket->status == 'to_verify') selected @endif value="to_verify">{{ __('ticket.view.manage.form.status.option.to_verify') }}</option>
+                                <option @if($ticket->status == 'done') selected @endif value="done">{{ __('ticket.view.manage.form.status.option.done') }}</option>
                             </select>
                             <x-input-error :messages="$errors->get('status')" class="mt-2"/>
                         </div>
@@ -126,6 +126,9 @@
                 <div class="p-6 text-gray-900">
                     <h2 class="mb-2">{{ __('ticket.view.media.title') }}</h2>
                     <ul>
+                        @if($ticket->attachments->count() == 0)
+                            <p class="text-gray-500 text-xs" colspan="7">{{ __('ticket.view.media.empty') }}</p>
+                        @endif
                         @foreach($ticket->attachments as $attachment)
                         <li class="text-sm font-bold p-1">
                             <a class="hover:text-blue-500" target="_blank" href="{{ route('ticket-attachment.view', ['attachment' => $attachment]) }}">{{ $attachment->name }}</a>
