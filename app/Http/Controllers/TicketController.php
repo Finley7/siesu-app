@@ -56,7 +56,7 @@ class TicketController extends Controller
             $attachment->save();
         }
 
-        Notification::send([User::where('role', 'admin')], (new TicketCreated($ticket))->locale('nl'));
+        Notification::send(User::where('role', 'admin')->get(), new TicketCreated($ticket));
 
         return redirect()->to('tickets/view/' . $ticket->id);
     }
