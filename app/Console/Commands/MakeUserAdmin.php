@@ -25,18 +25,18 @@ class MakeUserAdmin extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             $user = User::where('email', $this->argument('email'))->firstOrFail();
             $user->role = 'admin';
             $user->save();
-        } catch(ModelNotFoundException $exception) {
+        } catch(ModelNotFoundException $modelNotFoundException) {
             $this->error('The user was not found.');
             return;
         }
 
 
-        $this->comment("{$user->name} ({$user->email}) was made an admin");
+        $this->comment(sprintf('%s (%s) was made an admin', $user->name, $user->email));
     }
 }

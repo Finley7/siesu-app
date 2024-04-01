@@ -37,9 +37,8 @@ class TicketAttachmentController extends Controller
         if (file_exists($filePath)) {
             // Return a response with the file content
             return response()->file($filePath);
-        } else {
-            // Return a 404 response if the file does not exist
-            abort(404);
         }
+        // Return a 404 response if the file does not exist
+        abort(404);
     }
 }

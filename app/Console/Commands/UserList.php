@@ -24,7 +24,7 @@ class UserList extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $users = User::all()->select('id', 'name', 'email', 'role');
         $this->table(['Id', 'Name', 'Email', 'Role'], $users);

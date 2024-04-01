@@ -11,49 +11,62 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
+Route::middleware('guest')->group(static function () {
+    Route::get('register', static function () : \Illuminate\View\View {
+        return (new \App\Http\Controllers\Auth\RegisteredUserController())->create();
+    })
                 ->name('register');
-
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::post('register', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\RegisteredUserController())->store($request);
+    });
+    Route::get('login', static function () : \Illuminate\View\View {
+        return (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->create();
+    })
                 ->name('login');
-
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    Route::post('login', static function (\App\Http\Requests\Auth\LoginRequest $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->store($request);
+    });
+    Route::get('forgot-password', static function () : \Illuminate\View\View {
+        return (new \App\Http\Controllers\Auth\PasswordResetLinkController())->create();
+    })
                 ->name('password.request');
-
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('forgot-password', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\PasswordResetLinkController())->store($request);
+    })
                 ->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    Route::get('reset-password/{token}', static function (\Illuminate\Http\Request $request) : \Illuminate\View\View {
+        return (new \App\Http\Controllers\Auth\NewPasswordController())->create($request);
+    })
                 ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('reset-password', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\NewPasswordController())->store($request);
+    })
                 ->name('password.store');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(static function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');
-
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
                 ->middleware(['signed', 'throttle:6,1'])
                 ->name('verification.verify');
-
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('email/verification-notification', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\EmailVerificationNotificationController())->store($request);
+    })
                 ->middleware('throttle:6,1')
                 ->name('verification.send');
-
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+    Route::get('confirm-password', static function () : \Illuminate\View\View {
+        return (new \App\Http\Controllers\Auth\ConfirmablePasswordController())->show();
+    })
                 ->name('password.confirm');
-
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
-
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
-
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('confirm-password', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\ConfirmablePasswordController())->store($request);
+    });
+    Route::put('password', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\PasswordController())->update($request);
+    })->name('password.update');
+    Route::post('logout', static function (\Illuminate\Http\Request $request) : \Illuminate\Http\RedirectResponse {
+        return (new \App\Http\Controllers\Auth\AuthenticatedSessionController())->destroy($request);
+    })
                 ->name('logout');
 });
